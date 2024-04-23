@@ -8,15 +8,18 @@ app.use(bodyParser.json());
 
 const commentsByPostId = {};
 app.get("/posts/:id/comments", (req, res) => {
-  res.send(posts);
+  res.send(commentsByPostId[req.params.id] || []);
 });
 
 app.post("/posts/:id/comment-add", (req, res) => {
-  const id = randomBytes(4).toString("hex");
-  const { title } = req.body;
-  posts[id] = { id, title };
+  const comment_id = randomBytes(4).toString("hex");
+  const { content } = req.body;
 
-  res.status(201).send(posts[id]);
+  const comments = commentsByPostId[req.params.id] || [];
+
+  comments.push({ id: comment_id, content });
+
+  res.status(201).send(comments);
 });
 
 app.listen(process.env.PORT, () => {

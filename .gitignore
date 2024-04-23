@@ -1,4 +1,5 @@
 posts/.env
 comments/.env
+ui/node_modules
 posts/node_modules
 comments/node_modules
